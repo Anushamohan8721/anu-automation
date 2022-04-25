@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mavenit.ui</groupId>
+  <artifactId>automation-argos</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>automation-argos</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>3.141.59</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.bonigarcia</groupId>
+      <artifactId>webdrivermanager</artifactId>
+      <version>4.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>1.2.5</version>
+
+    </dependency>
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+  </dependencies>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>com.github.temyers</groupId>
+          <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+          <version>4.2.0</version>
+          <executions>
+            <execution>
+              <id>generateRunners</id>
+              <phase>generate-test-sources</phase>
+              <goals>
+                <goal>generateRunners</goal>
+              </goals>
+              <configuration>
+                <glue>
+                  <package>com.mavenit.ui </package>
+                </glue>
+                <outputDirectory>${project.build.directory}/generated-test-sources/cucumber
+                </outputDirectory>
+                <featuresDirectory>src/test/resources</featuresDirectory>
+                <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
+                <strict>true</strict>
+                <monochrome>true</monochrome>
+                <useTestNG>false</useTestNG>
+                <namingScheme>pattern</namingScheme>
+                <namingPattern>Parallel{c}IT</namingPattern>
+                <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
+                <parallelScheme>FEATURE</parallelScheme>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.19</version>
+          <configuration>
+            <forkCount>2</forkCount>
+            <reuseForks>true</reuseForks>
+            <includes>
+              <include>**/Parallel*IT.class</include>
+            </includes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+</project>
+
+
